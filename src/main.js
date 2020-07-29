@@ -1,3 +1,5 @@
-import pedirPokemon from backend.js
+import { pedirPokemon, llamarAPIListaPokemon } from "./backend.js";
+import crearListaPokemon from "./ui.js";
 
-pedirPokemon();
+pedirPokemon("bulbasaur");
+crearListaPokemon(10);
