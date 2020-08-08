@@ -1,35 +1,39 @@
 /* eslint-disable prettier/prettier */
-import { llamarAPIListaPokemon } from "./backend.js";
+import { pedirListaPokemon, pedirPokemon } from "./backend.js";
+
+const cantidadHabilidadesPokemon = 6;
+
+function capitalizarPalabra(palabra) {
+  return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
+}
 
 export function crearPokemon(pokemon) {
-  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-    .then((pokemon) => pokemon.json())
-    .then((pokemonJSON) => {
-      $(".card-img-top").attr("src", `${pokemonJSON.sprites.front_default}`);
-      $(".nombre-pokemon").text(
-        `${
-          pokemonJSON.species.name.charAt(0).toUpperCase() +
-          pokemonJSON.species.name.substr(1).toLowerCase()
-        }`
+  pedirPokemon(pokemon.toLowerCase() || pokemon).then((pokemonJSON) => {
+    $(".card-img-top").attr("src", `${pokemonJSON.sprites.front_default}`);
+    $(".nombre-pokemon").text(
+      capitalizarPalabra(`${pokemonJSON.species.name}`)
+    );
+    for (let i = 0; i < cantidadHabilidadesPokemon; i++) {
+      $(`.habilidad${i}`).text(
+        `${pokemonJSON.stats[i].stat.name} + ${pokemonJSON.stats[i].base_stat}`
       );
-      for (let i = 0; i < 6; i++) {
-        $(`.habilidad${i}`).text(
-          `${pokemonJSON.stats[i].stat.name} + ${pokemonJSON.stats[i].base_stat}`
-        );
-      }
-    });
+    }
+  });
 }
+
 function borrarListaPokemonVieja() {
   $(".listaPokemon").remove();
 }
 
 export function crearListaPokemon(offset) {
   borrarListaPokemonVieja();
-  llamarAPIListaPokemon(offset)
+  pedirListaPokemon(offset)
     .then((pokemones) => {
       pokemones.results.forEach((elemento) => {
         $(".ubicacion-grid-00").append(
-          `<button class="btn btn-primary d-flex flex-nowrap border listaPokemon">${elemento.name}</button>`
+          `<button class="btn btn-primary d-flex flex-nowrap border listaPokemon">${capitalizarPalabra(
+            elemento.name
+          )}</button>`
         );
       });
     })
