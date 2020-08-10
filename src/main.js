@@ -10,7 +10,6 @@ const botonAnterior = document.querySelector(".boton-anterior");
 
 function paginaSiguiente() {
   paginador += 10;
-
   return paginador;
 }
 
@@ -19,7 +18,6 @@ function paginaAnterior() {
   if (paginador < 0) {
     alert("Estas en el principio de la lista de Pokemones");
     paginador = 0;
-    return paginador;
   }
   return paginador;
 }
