@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 /* eslint-disable no-undef */
 const URL = "127.0.0.1:8080";
 

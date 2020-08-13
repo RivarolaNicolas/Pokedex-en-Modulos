@@ -1,10 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {
-  pedirListaPokemon,
-  pedirPokemon,
-  savePokemonInLocalStorage,
-  saveListOfPokemonInLocalStorage,
-} from "./backend.js";
+import { pedirListaPokemon, pedirPokemon } from "./backend.js";
 import { capitalizarPalabra } from "./helper/helper.js";
 
 const cantidadHabilidadesPokemon = 6;
@@ -12,22 +7,17 @@ const cantidadHabilidadesPokemon = 6;
 export async function crearPokemon(pokemon) {
   pokemon = pokemon.toLowerCase();
   const pokemonJSON = await pedirPokemon(pokemon);
-  if (localStorage.getItem(pokemon) === null) {
-    savePokemonInLocalStorage(pokemon);
-  }
   armarPokemon(pokemonJSON);
 }
 
-function borrarListaPokemonVieja() {
+function borrarListaPokemon() {
   $(".listaPokemon").remove();
 }
 
 export async function crearListaPokemon(offset) {
-  borrarListaPokemonVieja();
+  borrarListaPokemon();
   const listaPokemonesJSON = await pedirListaPokemon(offset);
-  if (localStorage.getItem(offset) === null) {
-    saveListOfPokemonInLocalStorage(offset);
-  }
+
   cambiarListaPokemon(listaPokemonesJSON);
   aniadirOnclickAElementos();
 }
