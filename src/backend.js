@@ -10,3 +10,11 @@ export function pedirListaPokemon(offset) {
     respuesta.json()
   );
 }
+
+export async function savePokemonInLocalStorage(pokemon) {
+  localStorage.setItem(pokemon, JSON.stringify(await pedirPokemon(pokemon)));
+}
+
+export async function saveListOfPokemonInLocalStorage(offset) {
+  localStorage.setItem(offset, JSON.stringify(await pedirListaPokemon(offset)));
+}
