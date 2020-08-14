@@ -32,12 +32,12 @@ export async function pedirListaPokemon(offset) {
   return listaPokemonJSON;
 }
 
-function paginaSiguiente() {
+export function paginaSiguiente() {
   paginador += 10;
   return paginador;
 }
 
-function paginaAnterior() {
+export function paginaAnterior() {
   paginador -= 10;
   if (paginador < 0) {
     alert("Estas en el principio de la lista de Pokemones");
