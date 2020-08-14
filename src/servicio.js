@@ -1,4 +1,3 @@
-import { crearListaPokemon, crearPokemon } from "./ui.js";
 import {
   pedirPokemon as pedirPokemonAPI,
   pedirListaPokemon as pedirListaPokemonAPI,
@@ -9,6 +8,9 @@ import {
   guardarPokemon,
   guardarListaPokemon,
 } from "./localStorage.js";
+import { inicializar } from "./ui.js";
+
+inicializar();
 
 let paginador = 0;
 
@@ -30,12 +32,6 @@ export async function pedirListaPokemon(offset) {
   return listaPokemonJSON;
 }
 
-crearListaPokemon(0);
-crearPokemon("bulbasaur");
-
-const botonSiguiente = document.querySelector(".boton-siguiente");
-const botonAnterior = document.querySelector(".boton-anterior");
-
 function paginaSiguiente() {
   paginador += 10;
   return paginador;
@@ -49,10 +45,3 @@ function paginaAnterior() {
   }
   return paginador;
 }
-
-botonSiguiente.onclick = () => {
-  crearListaPokemon(paginaSiguiente());
-};
-botonAnterior.onclick = () => {
-  crearListaPokemon(paginaAnterior());
-};

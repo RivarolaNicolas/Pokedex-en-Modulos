@@ -3,6 +3,10 @@ import { pedirPokemon, pedirListaPokemon } from "./servicio.js";
 import { capitalizarPalabra } from "./helper/helper.js";
 
 const cantidadHabilidadesPokemon = 6;
+export function inicializar() {
+  crearListaPokemon(0);
+  crearPokemon("bulbasaur");
+}
 
 export async function crearPokemon(pokemon) {
   pokemon = pokemon.toLowerCase();
@@ -57,3 +61,12 @@ function aniadirOnclickAElementos() {
     };
   });
 }
+const botonSiguiente = document.querySelector(".boton-siguiente");
+const botonAnterior = document.querySelector(".boton-anterior");
+
+botonSiguiente.onclick = () => {
+  crearListaPokemon(paginaSiguiente());
+};
+botonAnterior.onclick = () => {
+  crearListaPokemon(paginaAnterior());
+};
