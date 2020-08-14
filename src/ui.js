@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { pedirListaPokemon, pedirPokemon } from "./backend.js";
+import { pedirPokemon, pedirListaPokemon } from "./servicio.js";
 import { capitalizarPalabra } from "./helper/helper.js";
 
 const cantidadHabilidadesPokemon = 6;
