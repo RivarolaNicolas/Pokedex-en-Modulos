@@ -1,47 +1,47 @@
 import {
-  pedirPokemon as pedirPokemonAPI,
-  pedirListaPokemon as pedirListaPokemonAPI,
+  fetchPokemon as fetchPokemonAPI,
+  fetchPokemonList as fetchPokemonListAPI,
 } from "./api.js";
 import {
-  pedirPokemon as pedirPokemonLocalStorage,
-  pedirListaPokemon as pedirListaPokemonLocalStorage,
-  guardarPokemon,
-  guardarListaPokemon,
+  fetchPokemon as fetchPokemonLocalStorage,
+  fetchPokemonList as fetchPokemonListLocalStorage,
+  storePokemon,
+  storePokemonList,
 } from "./localStorage.js";
-import { inicializar } from "./ui.js";
+import { initialize } from "./ui.js";
 
-inicializar();
+initialize();
 
-let paginador = 0;
+let offset = 0;
 
-export async function pedirPokemon(pokemon) {
-  let pokemonJSON = pedirPokemonLocalStorage(pokemon);
+export async function fetchPokemon(pokemon) {
+  let pokemonJSON = fetchPokemonLocalStorage(pokemon);
   if (pokemonJSON === null) {
-    pokemonJSON = await pedirPokemonAPI(pokemon);
-    guardarPokemon(pokemon, pokemonJSON);
+    pokemonJSON = await fetchPokemonAPI(pokemon);
+    storePokemon(pokemon, pokemonJSON);
   }
   return pokemonJSON;
 }
 
-export async function pedirListaPokemon(offset) {
-  let listaPokemonJSON = pedirListaPokemonLocalStorage(offset);
-  if (listaPokemonJSON === null) {
-    listaPokemonJSON = await pedirListaPokemonAPI(offset);
-    guardarListaPokemon(offset, listaPokemonJSON);
+export async function fetchPokemonList(offset) {
+  let pokemonListJSON = fetchPokemonListLocalStorage(offset);
+  if (pokemonListJSON === null) {
+    pokemonListJSON = await fetchPokemonListAPI(offset);
+    storePokemonList(offset, pokemonListJSON);
   }
-  return listaPokemonJSON;
+  return pokemonListJSON;
 }
 
-export function paginaSiguiente() {
-  paginador += 10;
-  return paginador;
+export function nextPage() {
+  offset += 10;
+  return offset;
 }
 
-export function paginaAnterior() {
-  paginador -= 10;
-  if (paginador < 0) {
-    alert("Estas en el principio de la lista de Pokemones");
-    paginador = 0;
+export function previousPage() {
+  offset -= 10;
+  if (offset < 0) {
+    alert("You are at the beginning of the pokemon list");
+    offset = 0;
   }
-  return paginador;
+  return offset;
 }

@@ -1,77 +1,77 @@
 /* eslint-disable prettier/prettier */
 import {
-  pedirPokemon,
-  pedirListaPokemon,
-  paginaAnterior,
-  paginaSiguiente,
+  fetchPokemon,
+  fetchPokemonList,
+  previousPage,
+  nextPage,
 } from "./servicio.js";
-import { capitalizarPalabra } from "./helper/helper.js";
+import { capitalizeWord } from "./helper/helper.js";
 
-const cantidadHabilidadesPokemon = 6;
-export function inicializar() {
-  crearListaPokemon(0);
-  crearPokemon("bulbasaur");
+const amountOfPokemonAbilities = 6;
+export function initialize() {
+  createPokemonList(0);
+  printPokemon("bulbasaur");
 }
 
-export async function crearPokemon(pokemon) {
+export async function printPokemon(pokemon) {
   pokemon = pokemon.toLowerCase();
-  const pokemonJSON = await pedirPokemon(pokemon);
-  armarPokemon(pokemonJSON);
+  const pokemonJSON = await fetchPokemon(pokemon);
+  buildPokemon(pokemonJSON);
 }
 
-function borrarListaPokemon() {
-  $(".listaPokemon").remove();
+function deletePokemonList() {
+  $(".pokemon-list").remove();
 }
 
-export async function crearListaPokemon(offset) {
-  borrarListaPokemon();
-  const listaPokemonesJSON = await pedirListaPokemon(offset);
+export async function createPokemonList(offset) {
+  deletePokemonList();
+  const pokemonListJSON = await fetchPokemonList(offset);
 
-  cambiarListaPokemon(listaPokemonesJSON);
-  aniadirOnclickAElementos();
+  changePokemonList(pokemonListJSON);
+  setupPokemonEventHandler();
 }
 
-$(".ubicacion-grid-00").append(
-  `<button class="btn btn-success boton-anterior">Anterior</button>`,
-  `<button class="btn btn-success boton-siguiente">Siguiente</button>`,
+$(".location-grid-00").append(
+  `<button class="btn btn-success previos-page-button">Previous</button>`,
+  `<button class="btn btn-success next-page-button">Next</button>`,
   `<br/>`
 );
 
-function armarPokemon(pokemonJSON) {
+function buildPokemon(pokemonJSON) {
   $(".card-img-top").attr("src", `${pokemonJSON.sprites.front_default}`);
-  $(".nombre-pokemon").text(capitalizarPalabra(`${pokemonJSON.species.name}`));
-  for (let i = 0; i < cantidadHabilidadesPokemon; i++) {
-    $(`.habilidad${i}`).text(
+  $(".pokemon-name").text(capitalizeWord(`${pokemonJSON.species.name}`));
+  for (let i = 0; i < amountOfPokemonAbilities; i++) {
+    $(`.ability${i}`).text(
       `${pokemonJSON.stats[i].stat.name} + ${pokemonJSON.stats[i].base_stat}`
     );
   }
 }
 
-function cambiarListaPokemon(pokemones) {
-  pokemones.results.forEach((elemento) => {
-    $(".ubicacion-grid-00").append(
-      `<button class="btn btn-primary d-flex flex-nowrap border listaPokemon">${capitalizarPalabra(
-        elemento.name
+function changePokemonList(pokemon) {
+  pokemon.results.forEach((element) => {
+    $(".location-grid-00").append(
+      `<button class="btn btn-primary d-flex flex-nowrap border pokemon-list">${capitalizeWord(
+        element.name
       )}</button>`
     );
   });
 }
 
-function aniadirOnclickAElementos() {
-  const listaPokemon = document.querySelectorAll(".listaPokemon");
-  listaPokemon.forEach((pokemon) => {
+function setupPokemonEventHandler() {
+  const pokemonList = document.querySelectorAll(".pokemon-list");
+  pokemonList.forEach((pokemon) => {
     pokemon.onclick = () => {
-      const pokemonSeleccionado = pokemon.textContent;
-      crearPokemon(pokemonSeleccionado);
+      const chosenPokemon = pokemon.textContent;
+      printPokemon(chosenPokemon);
     };
   });
 }
-const botonSiguiente = document.querySelector(".boton-siguiente");
-const botonAnterior = document.querySelector(".boton-anterior");
+const nextPageButton = document.querySelector(".next-page-button");
+const previousPageButton = document.querySelector(".previos-page-button");
 
-botonSiguiente.onclick = () => {
-  crearListaPokemon(paginaSiguiente());
+nextPageButton.onclick = () => {
+  createPokemonList(nextPage());
 };
-botonAnterior.onclick = () => {
-  crearListaPokemon(paginaAnterior());
+previousPageButton.onclick = () => {
+  createPokemonList(previousPage());
 };

@@ -1,19 +1,19 @@
-export function guardarPokemon(pokemon, objeto) {
-  objeto = JSON.stringify(objeto);
-  localStorage.setItem(pokemon, objeto);
+export function storePokemon(pokemon, object) {
+  object = JSON.stringify(object);
+  localStorage.setItem(pokemon, object);
 }
 
-export function pedirPokemon(pokemon) {
+export function fetchPokemon(pokemon) {
   pokemon = localStorage.getItem(pokemon);
   return JSON.parse(pokemon);
 }
 
-export function guardarListaPokemon(offset, objeto) {
-  objeto = JSON.stringify(objeto);
-  localStorage.setItem(offset, objeto);
+export function storePokemonList(offset, object) {
+  object = JSON.stringify(object);
+  localStorage.setItem(offset, object);
 }
 
-export function pedirListaPokemon(offset) {
+export function fetchPokemonList(offset) {
   offset = localStorage.getItem(offset);
   return JSON.parse(offset);
 }
