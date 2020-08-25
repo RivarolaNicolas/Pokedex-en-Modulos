@@ -1,14 +1,11 @@
-import {
-  fetchPokemon as fetchPokemonAPI,
-  fetchPokemonList as fetchPokemonListAPI,
-} from "./api.js";
+import { fetchPokemon as fetchPokemonAPI, fetchPokemonList as fetchPokemonListAPI } from './api.js';
 import {
   fetchPokemon as fetchPokemonLocalStorage,
   fetchPokemonList as fetchPokemonListLocalStorage,
   storePokemon,
   storePokemonList,
-} from "./localStorage.js";
-import { initialize } from "./ui.js";
+} from './localStorage.js';
+import { initialize } from './ui.js';
 
 initialize();
 
@@ -40,7 +37,7 @@ export function nextPage() {
 export function previousPage() {
   offset -= 10;
   if (offset < 0) {
-    alert("You are at the beginning of the pokemon list");
+    alert('You are at the beginning of the pokemon list');
     offset = 0;
   }
   return offset;
