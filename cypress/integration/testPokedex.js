@@ -7,17 +7,17 @@ describe("Basic testing of the Pokedex", () => {
     cy.visit(URL);
   });
   it("loads bulbasaur by default", () => {
-    cy.get(".nombre-pokemon").should("have.text", "Bulbasaur");
+    cy.get(".pokemon-name").should("have.text", "Bulbasaur");
   });
   it("goes forward and backwards in the list of pokemons", () => {
-    cy.get(".listaPokemon")
+    cy.get(".pokemon-list")
       .eq(0)
       .then((pokemon) => {
         const nombrePokemon = pokemon.text();
-        cy.get(".boton-siguiente")
+        cy.get(".next-page-button")
           .click()
           .then(() => {
-            cy.get(".listaPokemon")
+            cy.get(".pokemon-list")
               .eq(0)
               .should((nuevoPokemon) => {
                 expect(nuevoPokemon.text()).not.to.eq(nombrePokemon);
@@ -26,15 +26,15 @@ describe("Basic testing of the Pokedex", () => {
       });
   });
   it("shows the chosen pokemon", () => {
-    cy.get(".listaPokemon")
+    cy.get(".pokemon-list")
       .eq(3)
       .then((pokemon) => {
         const nombrePokemon = pokemon.text();
-        cy.get(".listaPokemon")
+        cy.get(".pokemon-list")
           .eq(3)
           .click()
           .then(() => {
-            cy.get(".listaPokemon")
+            cy.get(".pokemon-list")
               .eq(3)
               .should((nuevoNombrePokemon) => {
                 expect(nombrePokemon).not.to.eq(nuevoNombrePokemon);

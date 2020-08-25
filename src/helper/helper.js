@@ -1,3 +1,3 @@
-export function capitalizarPalabra(palabra) {
-  return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
+export function capitalizeWord(word) {
+  return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
 }
